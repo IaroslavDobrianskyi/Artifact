@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artifact", "Artifact\Artifact.csproj", "{1BA87E93-3858-48FF-B942-7B43DD3F298C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Artifact.Tests", "Artifact.Tests\Artifact.Tests.csproj", "{7EDB1AC7-55EB-40F3-BDF5-892991E7564F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B2E34BA2-54C8-4B99-9DAF-D6F9C6FB7FA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1BA87E93-3858-48FF-B942-7B43DD3F298C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BA87E93-3858-48FF-B942-7B43DD3F298C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BA87E93-3858-48FF-B942-7B43DD3F298C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BA87E93-3858-48FF-B942-7B43DD3F298C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EDB1AC7-55EB-40F3-BDF5-892991E7564F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EDB1AC7-55EB-40F3-BDF5-892991E7564F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EDB1AC7-55EB-40F3-BDF5-892991E7564F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EDB1AC7-55EB-40F3-BDF5-892991E7564F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2E34BA2-54C8-4B99-9DAF-D6F9C6FB7FA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2E34BA2-54C8-4B99-9DAF-D6F9C6FB7FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2E34BA2-54C8-4B99-9DAF-D6F9C6FB7FA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2E34BA2-54C8-4B99-9DAF-D6F9C6FB7FA5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
