@@ -8,5 +8,3 @@ D:\Projects\Artifact\DataAccess\obj\Debug\DataAccess.pdb
 D:\Projects\Artifact\DataAccess\obj\Debug\DataAccess.Migrations.InitialCreate.resources
 D:\Projects\Artifact\DataAccess\obj\Debug\DataAccess.csproj.GenerateResource.Cache
 D:\Projects\Artifact\DataAccess\obj\Debug\DataAccess.Migrations.CreateDB.resources
-D:\Projects\Artifact\DataAccess\obj\Debug\DataAccess.Migrations.m1.resources
-D:\Projects\Artifact\DataAccess\obj\Debug\DataAccess.Migrations.m2.resources
