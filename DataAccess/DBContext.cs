@@ -9,7 +9,8 @@ namespace DataAccess
 {
     public class ArtifactContext : DbContext
     {
-        public DbSet<Step> Steps { get; set; }
+        public DbSet<CarrierStep> CarrierSteps { get; set; }
+        public DbSet<CarrierActionInFlow> CarrierActionsInFlow { get; set; }
         public DbSet<StepAction> StepActions { get; set; }
 
         public ArtifactContext() : base("ArtifactConnection") { }

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    public class Step
+    public class CarrierStep
     {
-        public int StepId { get; set; }
+        public int CarrierStepId { get; set; }
         public string Description { get; set; }
+        public CarrierActionInFlow CurrentActionId { get; set; }
         public List<StepAction> Actions { get; set; }
     }
 }

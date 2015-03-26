@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="ActionResult.cs" />
     <Compile Include="Carrier.cs" />
+    <Compile Include="CarrierActionInFlow.cs" />
     <Compile Include="DBContext.cs" />
     <Compile Include="Migrations\201503121357020_InitialCreate.cs" />
     <Compile Include="Migrations\201503121357020_InitialCreate.Designer.cs">
@@ -59,20 +60,12 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequirementMask.cs" />
-    <Compile Include="Step.cs" />
+    <Compile Include="CarrierStep.cs" />
     <Compile Include="StepAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201503121357020_InitialCreate.resx">
-      <DependentUpon>201503121357020_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503121416490_CreateDB.resx">
-      <DependentUpon>201503121416490_CreateDB.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

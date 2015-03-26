@@ -12,10 +12,6 @@ namespace Artifact.Controllers
     {
         public ActionResult Index()
         {
-            using(var ctx = new ArtifactContext())
-            {
-                ctx.Steps.Where(el => el.StepId == 1);
-            }
 
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 

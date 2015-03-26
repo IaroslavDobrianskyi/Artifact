@@ -9,7 +9,7 @@ namespace DataAccess
     {
         public int StepActionId { get; set; }
         public string Description { get; set; }
-
+        public CarrierStep CarrierStepId { get; set; }
         public RequirementMask Requirement { get; set; }
         public GameActionResult Result { get; set; }
     }

@@ -167,6 +167,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503261245598_Flow.cs" />
+    <Compile Include="Migrations\201503261245598_Flow.Designer.cs">
+      <DependentUpon>201503261245598_Flow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
