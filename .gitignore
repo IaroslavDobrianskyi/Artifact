@@ -28,7 +28,6 @@ _ReSharperPlatformVs121.Artifact/
 # Logs and databases #
 ######################
 *.log
-*.sql
 *.sqlite
  
 # OS generated files #
