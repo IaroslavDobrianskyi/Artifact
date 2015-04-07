@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="artModelStoreContainer" CdmEntityContainer="artEntities">
+    <EntitySetMapping Name="ActFlows">
+      <EntityTypeMapping TypeName="artModel.ActFlow">
+        <MappingFragment StoreEntitySet="ActFlow">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="idStep" ColumnName="idStep" />
+          <ScalarProperty Name="idAction" ColumnName="idAction" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Actions">
+      <EntityTypeMapping TypeName="artModel.Action">
+        <MappingFragment StoreEntitySet="Action">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="idStep" ColumnName="idStep" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Statistics">
+      <EntityTypeMapping TypeName="artModel.Statistic">
+        <MappingFragment StoreEntitySet="Statistic">
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="kStep" ColumnName="kStep" />
+          <ScalarProperty Name="kAct" ColumnName="kAct" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="nStep" ColumnName="nStep" />
+          <ScalarProperty Name="nAct" ColumnName="nAct" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Steps">
+      <EntityTypeMapping TypeName="artModel.Step">
+        <MappingFragment StoreEntitySet="Step">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="idActFlow" ColumnName="idActFlow" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionName="artModel.Store.GetChain" FunctionImportName="GetChain">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="artModel.GetChain_Result">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="idUser" ColumnName="idUser" />
+          <ScalarProperty Name="idStep" ColumnName="idStep" />
+          <ScalarProperty Name="idAction" ColumnName="idAction" />
+          <ScalarProperty Name="aid" ColumnName="aid" />
+          <ScalarProperty Name="row_num" ColumnName="row_num" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>
