@@ -4,33 +4,43 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Art.Models;
+using log4net;
+using log4net.Config;
 
 namespace Art
 {
     class App_code
     {
+        //public static readonly ILog log = LogManager.GetLogger(typeof(App_code));
+        
         public void Run(int c, int kStep, int kAct)
         {
+            //log4net.Config.XmlConfigurator.Configure();
             // c- threads count
-            int[] par = new int[3];
-            par[1] = kStep;
-            par[2] = kAct;
+            int[] par1 = new int[3];
+            par1[1] = kStep;
+            par1[2] = kAct;
+            int[] par2 = new int[3];
+            par2[1] = kStep;
+            par2[2] = kAct;
             //for (int i=1;i<=c;i++)
             //{
-                par[0] = 1;
+                par1[0] = 1;
+                //log.Info("1 par1 " + par1[0].ToString());
                 Thread thread1 = new Thread(PutFlow);
-                thread1.Start(par);
-                par[0] = 2;
+                thread1.Start(par1);
+                par2[0] = 2;
+                //log.Info("2 par2 " + par2[0].ToString());
                 Thread thread2 = new Thread(PutFlow);
-                thread2.Start(par);
-                Console.ReadLine();
+                thread2.Start(par2);
+                
             //}
         }
 
         private void PutFlow(object obj)
         {
             int[] p =(int[]) obj;
-Console.WriteLine("Ідентифікатор {0} :", Thread.CurrentThread.ManagedThreadId);
+//log.Info("Ідентифікатор  :"+ Thread.CurrentThread.ManagedThreadId.ToString()+" p0 "+p[0].ToString());
            // p[0] - user ID
            // p[1] - steps count
            // p[2] - actions count
@@ -72,11 +82,13 @@ Console.WriteLine("Ідентифікатор {0} :", Thread.CurrentThread.Manag
                         t2 = DateTime.Now;
 
                         Statistic NextStat = db.Statistics.Add(new Statistic { idUser = parUser, kStep = kStep, kAct = kAct, time = (t2 - t1).Milliseconds, nStep = 1, nAct = 101 });
+                        //log.Info("Ідентифікатор  :" + Thread.CurrentThread.ManagedThreadId.ToString() + " parUser " + parUser.ToString());
                         db.SaveChanges();
                         transaction.Commit();
                     }
-                    catch
+                    catch (Exception error)
                     {
+                        //log.Error(error.Message);
                         transaction.Rollback();
                     }
                 }
