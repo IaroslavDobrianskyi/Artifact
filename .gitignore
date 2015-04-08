@@ -7,7 +7,6 @@ _ReSharperPlatformVs121.Artifact/
 ###################
 *.com
 *.class
-*.dll
 *.exe
 *.o
 *.so
