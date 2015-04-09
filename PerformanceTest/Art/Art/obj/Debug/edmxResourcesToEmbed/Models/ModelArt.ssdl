@@ -3,9 +3,8 @@
   <EntityType Name="ActFlow">
     <Key>
       <PropertyRef Name="id" />
-      <PropertyRef Name="idUser" />
     </Key>
-    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="idUser" Type="int" Nullable="false" />
     <Property Name="idStep" Type="int" />
     <Property Name="idAction" Type="int" />
@@ -13,19 +12,14 @@
   <EntityType Name="Action">
     <Key>
       <PropertyRef Name="id" />
-      <PropertyRef Name="idUser" />
     </Key>
-    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="idUser" Type="int" Nullable="false" />
     <Property Name="idStep" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Statistic">
     <Key>
-      <PropertyRef Name="idUser" />
-      <PropertyRef Name="kStep" />
-      <PropertyRef Name="kAct" />
-      <PropertyRef Name="nStep" />
-      <PropertyRef Name="nAct" />
+      <PropertyRef Name="id" />
     </Key>
     <Property Name="idUser" Type="int" Nullable="false" />
     <Property Name="kStep" Type="int" Nullable="false" />
@@ -33,43 +27,39 @@
     <Property Name="time" Type="int" />
     <Property Name="nStep" Type="int" Nullable="false" />
     <Property Name="nAct" Type="int" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityType Name="Step">
     <Key>
       <PropertyRef Name="id" />
-      <PropertyRef Name="idUser" />
     </Key>
-    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="idUser" Type="int" Nullable="false" />
     <Property Name="idActFlow" Type="int" />
   </EntityType>
   <Association Name="FK_ActFlow_Action">
-    <End Role="Action" Type="Self.Action" Multiplicity="0..1" />
-    <End Role="ActFlow" Type="Self.ActFlow" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Action">
-        <PropertyRef Name="id" />
-        <PropertyRef Name="idUser" />
-      </Principal>
-      <Dependent Role="ActFlow">
-        <PropertyRef Name="idAction" />
-        <PropertyRef Name="idUser" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_ActFlow_Step">
-    <End Role="Step" Type="Self.Step" Multiplicity="0..1">
+    <End Role="Action" Type="Self.Action" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="ActFlow" Type="Self.ActFlow" Multiplicity="*" />
     <ReferentialConstraint>
+      <Principal Role="Action">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ActFlow">
+        <PropertyRef Name="idAction" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ActFlow_Step">
+    <End Role="Step" Type="Self.Step" Multiplicity="0..1" />
+    <End Role="ActFlow" Type="Self.ActFlow" Multiplicity="*" />
+    <ReferentialConstraint>
       <Principal Role="Step">
         <PropertyRef Name="id" />
-        <PropertyRef Name="idUser" />
       </Principal>
       <Dependent Role="ActFlow">
         <PropertyRef Name="idStep" />
-        <PropertyRef Name="idUser" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -81,11 +71,9 @@
     <ReferentialConstraint>
       <Principal Role="Step">
         <PropertyRef Name="id" />
-        <PropertyRef Name="idUser" />
       </Principal>
       <Dependent Role="Action">
         <PropertyRef Name="idStep" />
-        <PropertyRef Name="idUser" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -95,11 +83,9 @@
     <ReferentialConstraint>
       <Principal Role="ActFlow">
         <PropertyRef Name="id" />
-        <PropertyRef Name="idUser" />
       </Principal>
       <Dependent Role="Step">
         <PropertyRef Name="idActFlow" />
-        <PropertyRef Name="idUser" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -20,5 +20,6 @@ namespace Art.Models
         public Nullable<int> time { get; set; }
         public int nStep { get; set; }
         public int nAct { get; set; }
+        public int id { get; set; }
     }
 }

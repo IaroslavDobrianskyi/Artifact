@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Art.Models;
-using log4net;
-using log4net.Config;
+//using log4net;
+//using log4net.Config;
 
 namespace Art
 {
@@ -17,23 +17,24 @@ namespace Art
         {
             //log4net.Config.XmlConfigurator.Configure();
             // c- threads count
-            int[] par1 = new int[3];
-            par1[1] = kStep;
-            par1[2] = kAct;
-            int[] par2 = new int[3];
-            par2[1] = kStep;
-            par2[2] = kAct;
-            //for (int i=1;i<=c;i++)
+            int[][] par = new int[c][];
+
+            for (int i = 0; i < c; i++) 
+            {
+                par[i] = new int[3]{i+1,kStep,kAct};
+            }
+            PutFlow(par[0]);
+            //for (int i=0;i<c;i++)
             //{
-                par1[0] = 1;
-                //log.Info("1 par1 " + par1[0].ToString());
-                Thread thread1 = new Thread(PutFlow);
-                thread1.Start(par1);
-                par2[0] = 2;
-                //log.Info("2 par2 " + par2[0].ToString());
-                Thread thread2 = new Thread(PutFlow);
-                thread2.Start(par2);
-                
+                //par1[0] = 1;
+                ////log.Info("1 par1 " + par1[0].ToString());
+                //Thread thread = new Thread(PutFlow);
+                //thread.Start(par[i]);
+                //par2[0] = 2;
+                ////log.Info("2 par2 " + par2[0].ToString());
+                //Thread thread2 = new Thread(PutFlow);
+                //thread2.Start(par2);
+
             //}
         }
 
@@ -49,10 +50,10 @@ namespace Art
             int kAct = p[2];
             DateTime t1 = DateTime.Now;
             DateTime t2 = DateTime.Now;
-            int fIdStep = 1;
-            int fIdAct = 101;
-            int fIdFlow = 1001;
-            int ActFlow;
+            //int fIdStep = 1;
+            //int fIdAct = 101;
+            //int fIdFlow = 1001;
+            //int ActFlow;
 
             using (artEntities db = new artEntities())
             {
@@ -60,33 +61,33 @@ namespace Art
                 {
                     try
                     {
-                        Step StepNext = db.Steps.Add(new Step { id = fIdStep, idUser = parUser });
-                        for (int k = 1; k <= kStep; k++)
+                        int i = 0;
+                        Step[] StepNext = new Step[kStep];
+                        ActFlow[] FixFlow = new ActFlow[kStep - 1];
+                        StepNext[0] = db.Steps.Add(new Step { idUser = parUser });
+                        Art.Models.Action[] NextAct = new Art.Models.Action[kAct];
+                        for (int k = 1; k < kStep; k++)
                         {
-                            ActFlow = fIdAct;
-                            for (int i = 1; i <= kAct; i++)
+                            
+                            for (i = 0; i < kAct; i++)
                             {
-                                Art.Models.Action NextAct = db.Actions.Add(new Art.Models.Action { id = fIdAct, idUser = parUser, idStep = fIdStep });
-                                fIdAct++;
+                               NextAct[i] = db.Actions.Add(new Art.Models.Action { idUser = parUser, Step = StepNext[k-1] });
                             }
 
-                            Step StepNext1 = db.Steps.Add(new Step { id = fIdStep + 1, idUser = parUser });
-                            ActFlow FixFlow = db.ActFlows.Add(new ActFlow { id = fIdFlow, idUser = parUser, idStep = fIdStep + 1, idAction = ActFlow });
+                            StepNext[k] = db.Steps.Add(new Step {idUser = parUser });
+                            FixFlow[k-1] = db.ActFlows.Add(new ActFlow { idUser = parUser, Step = StepNext[k], Action = NextAct[i-kAct] });
                             db.SaveChanges();
-                            StepNext = db.Steps.Where(s => s.id == fIdStep & s.idUser == parUser).First();
-                            StepNext.idActFlow = fIdFlow;
-                            db.SaveChanges();
-                            fIdStep++;
-                            fIdFlow++;
+                            StepNext[k-1].ActFlow = FixFlow[k-1];
+                            //db.SaveChanges();
                         }
                         t2 = DateTime.Now;
 
-                        Statistic NextStat = db.Statistics.Add(new Statistic { idUser = parUser, kStep = kStep, kAct = kAct, time = (t2 - t1).Milliseconds, nStep = 1, nAct = 101 });
+                        Statistic NextStat = db.Statistics.Add(new Statistic { idUser = parUser, kStep = kStep, kAct = kAct, time = Convert.ToInt32((t2 - t1).TotalMilliseconds), nStep = 1, nAct = 101 });
                         //log.Info("Ідентифікатор  :" + Thread.CurrentThread.ManagedThreadId.ToString() + " parUser " + parUser.ToString());
                         db.SaveChanges();
                         transaction.Commit();
                     }
-                    catch (Exception error)
+                    catch
                     {
                         //log.Error(error.Message);
                         transaction.Rollback();

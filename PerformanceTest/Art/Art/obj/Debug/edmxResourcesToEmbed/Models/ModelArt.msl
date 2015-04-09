@@ -23,6 +23,7 @@
     <EntitySetMapping Name="Statistics">
       <EntityTypeMapping TypeName="artModel.Statistic">
         <MappingFragment StoreEntitySet="Statistic">
+          <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="idUser" ColumnName="idUser" />
           <ScalarProperty Name="kStep" ColumnName="kStep" />
           <ScalarProperty Name="kAct" ColumnName="kAct" />

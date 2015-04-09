@@ -11,7 +11,6 @@
   <EntityType Name="ActFlow">
     <Key>
       <PropertyRef Name="id" />
-      <PropertyRef Name="idUser" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" />
     <Property Name="idUser" Type="Int32" Nullable="false" />
@@ -24,7 +23,6 @@
   <EntityType Name="Action">
     <Key>
       <PropertyRef Name="id" />
-      <PropertyRef Name="idUser" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" />
     <Property Name="idUser" Type="Int32" Nullable="false" />
@@ -34,11 +32,7 @@
   </EntityType>
   <EntityType Name="Statistic">
     <Key>
-      <PropertyRef Name="idUser" />
-      <PropertyRef Name="kStep" />
-      <PropertyRef Name="kAct" />
-      <PropertyRef Name="nStep" />
-      <PropertyRef Name="nAct" />
+      <PropertyRef Name="id" />
     </Key>
     <Property Name="idUser" Type="Int32" Nullable="false" />
     <Property Name="kStep" Type="Int32" Nullable="false" />
@@ -46,11 +40,11 @@
     <Property Name="time" Type="Int32" />
     <Property Name="nStep" Type="Int32" Nullable="false" />
     <Property Name="nAct" Type="Int32" Nullable="false" />
+    <Property Name="id" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="Step">
     <Key>
       <PropertyRef Name="id" />
-      <PropertyRef Name="idUser" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" />
     <Property Name="idUser" Type="Int32" Nullable="false" />
@@ -65,11 +59,9 @@
     <ReferentialConstraint>
       <Principal Role="Action">
         <PropertyRef Name="id" />
-        <PropertyRef Name="idUser" />
       </Principal>
       <Dependent Role="ActFlow">
         <PropertyRef Name="idAction" />
-        <PropertyRef Name="idUser" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -81,11 +73,9 @@
     <ReferentialConstraint>
       <Principal Role="Step">
         <PropertyRef Name="id" />
-        <PropertyRef Name="idUser" />
       </Principal>
       <Dependent Role="ActFlow">
         <PropertyRef Name="idStep" />
-        <PropertyRef Name="idUser" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -95,11 +85,9 @@
     <ReferentialConstraint>
       <Principal Role="ActFlow">
         <PropertyRef Name="id" />
-        <PropertyRef Name="idUser" />
       </Principal>
       <Dependent Role="Step">
         <PropertyRef Name="idActFlow" />
-        <PropertyRef Name="idUser" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -111,11 +99,9 @@
     <ReferentialConstraint>
       <Principal Role="Step">
         <PropertyRef Name="id" />
-        <PropertyRef Name="idUser" />
       </Principal>
       <Dependent Role="Action">
         <PropertyRef Name="idStep" />
-        <PropertyRef Name="idUser" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
