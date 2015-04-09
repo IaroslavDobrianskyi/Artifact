@@ -38,6 +38,8 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,13 +59,93 @@
       <DependentUpon>201503121416490_CreateDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\ActFlow.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Action.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Artifact.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArtifactModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtifactModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArtifactModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArtifactModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArtifactModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArtifactType.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArtifactTypeBonu.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Bonu.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Constellation.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ConstellationBonu.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Statistic.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Step.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Talent.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserArtifact.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserTalent.cs">
+      <DependentUpon>ArtifactModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CarrierStep.cs" />
     <Compile Include="StepAction.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Models\ArtifactModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ArtifactModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\ArtifactModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ArtifactModel.edmx</DependentUpon>
+      <LastGenOutput>ArtifactModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Models\ArtifactModel.edmx.diagram">
+      <DependentUpon>ArtifactModel.edmx</DependentUpon>
+    </None>
+    <None Include="Models\ArtifactModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ArtifactModel.edmx</DependentUpon>
+      <LastGenOutput>ArtifactModel.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

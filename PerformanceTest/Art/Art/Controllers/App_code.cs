@@ -23,19 +23,19 @@ namespace Art
             {
                 par[i] = new int[3]{i+1,kStep,kAct};
             }
-            PutFlow(par[0]);
-            //for (int i=0;i<c;i++)
-            //{
+            //PutFlow(par[0]);
+            for (int i=0;i<c;i++)
+            {
                 //par1[0] = 1;
                 ////log.Info("1 par1 " + par1[0].ToString());
-                //Thread thread = new Thread(PutFlow);
-                //thread.Start(par[i]);
+                Thread thread = new Thread(PutFlow);
+                thread.Start(par[i]);
                 //par2[0] = 2;
                 ////log.Info("2 par2 " + par2[0].ToString());
                 //Thread thread2 = new Thread(PutFlow);
                 //thread2.Start(par2);
 
-            //}
+            }
         }
 
         private void PutFlow(object obj)
@@ -78,7 +78,6 @@ namespace Art
                             FixFlow[k-1] = db.ActFlows.Add(new ActFlow { idUser = parUser, Step = StepNext[k], Action = NextAct[i-kAct] });
                             db.SaveChanges();
                             StepNext[k-1].ActFlow = FixFlow[k-1];
-                            //db.SaveChanges();
                         }
                         t2 = DateTime.Now;
 

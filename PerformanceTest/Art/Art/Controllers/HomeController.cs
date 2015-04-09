@@ -16,7 +16,7 @@ namespace Art.Controllers
             int kStep=10;
             int kAct=5;
             Art.App_code flow=new App_code();
-            flow.Run(1, kStep, kAct);
+            flow.Run(10, kStep, kAct);
             
 
     return View();
