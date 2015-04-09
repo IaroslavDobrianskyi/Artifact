@@ -240,7 +240,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="artEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="ArtEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ActFlows" EntityType="Self.ActFlow" />
           <EntitySet Name="Actions" EntityType="Self.Action" />
           <EntitySet Name="Statistics" EntityType="Self.Statistic" />
@@ -270,7 +270,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="artModelStoreContainer" CdmEntityContainer="artEntities">
+        <EntityContainerMapping StorageEntityContainer="artModelStoreContainer" CdmEntityContainer="ArtEntities">
           <EntitySetMapping Name="ActFlows">
             <EntityTypeMapping TypeName="artModel.ActFlow">
               <MappingFragment StoreEntitySet="ActFlow">
