@@ -15,31 +15,31 @@ namespace Art.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class artEntities : DbContext
+    public partial class ArtEntities : DbContext
     {
-        public artEntities()
-            : base("name=artEntities")
-        {
-        }
+        //public ArtEntities()
+        //    : base("name=ArtEntities")
+        //{
+        //}
     
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            throw new UnintentionalCodeFirstException();
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    throw new UnintentionalCodeFirstException();
+        //}
     
         public virtual DbSet<ActFlow> ActFlows { get; set; }
         public virtual DbSet<Action> Actions { get; set; }
         public virtual DbSet<Statistic> Statistics { get; set; }
         public virtual DbSet<Step> Steps { get; set; }
     
-        [DbFunction("artEntities", "GetChain")]
+        [DbFunction("ArtEntities", "GetChain")]
         public virtual IQueryable<GetChain_Result> GetChain(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetChain_Result>("[artEntities].[GetChain](@id)", idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<GetChain_Result>("[ArtEntities].[GetChain](@id)", idParameter);
         }
     }
 }

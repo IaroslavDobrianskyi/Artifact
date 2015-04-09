@@ -105,7 +105,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="artEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="ArtEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="ActFlows" EntityType="Self.ActFlow" />
     <EntitySet Name="Actions" EntityType="Self.Action" />
     <EntitySet Name="Statistics" EntityType="Self.Statistic" />

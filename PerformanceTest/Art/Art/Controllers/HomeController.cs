@@ -13,10 +13,10 @@ namespace Art.Controllers
         public ActionResult Index()
         {
             // створюю записи
-            int kStep=10;
-            int kAct=5;
+            int kStep=50;
+            int kAct=10;
             Art.App_code flow=new App_code();
-            flow.Run(1, kStep, kAct);
+            flow.Run(50, kStep, kAct);
             
 
     return View();

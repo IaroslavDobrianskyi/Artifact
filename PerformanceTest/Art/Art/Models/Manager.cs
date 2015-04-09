@@ -7,10 +7,10 @@ namespace Art.Models
 {
     public class Manager
     {
-        private artEntities _db;
+        private ArtEntities _db;
         public Manager() 
         {
-            _db = new artEntities();
+            _db = new ArtEntities();
         }
 
     }
