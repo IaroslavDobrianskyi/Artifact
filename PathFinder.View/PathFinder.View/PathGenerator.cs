@@ -25,8 +25,8 @@ namespace PathFinder.View
             ProbabilityCmb.SelectedItem = 50;
             StartX.Text = "10";
             StartY.Text = "10";
-            EndY.Text = "30";
-            EndX.Text = "50";
+            EndY.Text = "300";
+            EndX.Text = "300";
             _graphics = RouteView.CreateGraphics();
         }
 
@@ -62,7 +62,21 @@ namespace PathFinder.View
 
                 if (Curve.Checked)
                 {
+                    //var count = resultPoints.Count();
+                    //Point[] points = new Point[count + 2];
+                    //points[0] = _startPoint;
+                    //for (int i = 0; i < count; i++)
+                    //{
+                    //    DrawCurve(points[i+1], resultPoints[i]);    
+                    //}
+                    //points[count] = _endPoint;
+
+                    //_graphics.DrawCurve(new Pen(Color.Firebrick, PaneWidth), points);
+                    
                     DrawCurve(_startPoint, _endPoint);
+                    
+                    //DrawCurve(resultPoints[count - 1], _endPoint);    
+                    
                 }
             }
             catch (Exception ex)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace PathFinder
 {
@@ -57,10 +58,11 @@ namespace PathFinder
             }
 
             var filterMatrix = new List<Tuple<Point, int>>();
+            var lineAngle = Math.Atan( (endPoint.Y - startPoint.Y*1.0)/(endPoint.X - startPoint.X));
 
             for (int i = route.StartPoint.X + 1; i < route.EndPoint.X; i++)
             {
-                var nextPoint = GetNextPoint(i, route);
+                var nextPoint = GetNextPoint(i, route, lineAngle);
                 if (ValidatePoint(map, nextPoint))
                 {
                     var filterMarker = new Tuple<Point, int>(nextPoint, probability);
@@ -84,12 +86,13 @@ namespace PathFinder
             return true;
         }
 
-        private Point GetNextPoint(int nextX, Route route)
+        private Point GetNextPoint(int nextX, Route route, double lineAngle)
         {
             var nextPoint = new Point();
-            var nextY = GetNextY(route, nextX);
+            var newX = nextX;
+            var nextY = GetNextY(route, ref newX, lineAngle);
 
-            nextPoint.X = nextX;
+            nextPoint.X = newX;
             nextPoint.Y = nextY;
 
             return nextPoint;
@@ -117,13 +120,20 @@ namespace PathFinder
             return result;
         }
 
-        private int GetNextY(Route route, int nextX)
+        private int GetNextY(Route route,ref int nextX, double lineAngle)
         {
             var angle = GetAngle(nextX, route.XLength);
 
-            var nextY = (route.YLength / route.XLength) * nextX +
-                ((route.StartPoint.Y * route.EndPoint.X - route.EndPoint.Y * route.StartPoint.X) / route.XLength) +
-                AmplitudeFluctuations * Math.Sin(angle);
+
+            var nextY = (route.YLength/route.XLength)*nextX +
+                        ((route.StartPoint.Y*route.EndPoint.X - route.EndPoint.Y*route.StartPoint.X)/route.XLength);
+
+
+            var amplituda = AmplitudeFluctuations * Math.Sin(angle);
+
+            nextY += amplituda * Math.Sign(Math.PI / 2 - lineAngle);
+            nextX -= Convert.ToInt32(Math.Round(amplituda * Math.Cos(Math.PI/2 - lineAngle)));
+            
 
             return Convert.ToInt32(Math.Round(nextY));
         }
