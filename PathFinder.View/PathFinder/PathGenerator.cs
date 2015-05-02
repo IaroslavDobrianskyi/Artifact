@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Runtime.Remoting;
 using System.Text.RegularExpressions;
 
 namespace PathFinder
@@ -48,8 +50,48 @@ namespace PathFinder
             }
         }
 
+        public Route GetPath(Map map, List<Point> points, int probability = ProbabilityDef)
+        {
+            var listRotes = new List<Route>();
+            for (int index = 0; index + 1 < points.Count; index++)
+            {
+                var startPoint = points[index];
+                var endPoint = points[index + 1];
+                listRotes.Add(GetPath(map, startPoint, endPoint, probability));
+            }
+            var resultRoute = new Route(points.First(), points.Last());
+            var helpPointsForResultRoute = new List<Point>();
+
+            var en = listRotes.GetEnumerator();
+            var canMove = en.MoveNext();
+
+            while (canMove)
+            {
+                var currRoute = en.Current;
+
+                helpPointsForResultRoute.AddRange(currRoute.Invers ? currRoute.HelpPoints.Reverse() : currRoute.HelpPoints);
+                if (canMove = en.MoveNext())
+                {
+                    helpPointsForResultRoute.Add(currRoute.EndPoint);
+                }
+            }
+            resultRoute.HelpPoints = new LinkedList<Point>(helpPointsForResultRoute);
+
+            return resultRoute;
+        }
+
         public Route GetPath(Map map, Point startPoint, Point endPoint, int probability = ProbabilityDef)
         {
+            bool mirror = false;
+
+            if (startPoint.Y > endPoint.Y)
+            {
+                mirror = true;
+                var temp = startPoint.Y;
+                startPoint.Y = endPoint.Y;
+                endPoint.Y = temp;
+            }
+
             var route = new Route(startPoint, endPoint);
 
             if (!ValidateRoute(route, map))
@@ -58,9 +100,21 @@ namespace PathFinder
             }
 
             var filterMatrix = new List<Tuple<Point, int>>();
-            var lineAngle = Math.Atan( (endPoint.Y - startPoint.Y*1.0)/(endPoint.X - startPoint.X));
+            var lineAngle = Math.Atan((endPoint.Y - startPoint.Y * 1.0) / (endPoint.X - startPoint.X));
 
-            for (int i = route.StartPoint.X + 1; i < route.EndPoint.X; i++)
+            int startX, endX;
+            if (startPoint.X > endPoint.X)
+            {
+                endX = startPoint.X + 1;
+                startX = endPoint.X;
+            }
+            else
+            {
+                endX = endPoint.X;
+                startX = startPoint.X + 1;
+            }
+
+            for (int i = startX; i < endX; i++)
             {
                 var nextPoint = GetNextPoint(i, route, lineAngle);
                 if (ValidatePoint(map, nextPoint))
@@ -68,6 +122,17 @@ namespace PathFinder
                     var filterMarker = new Tuple<Point, int>(nextPoint, probability);
                     filterMatrix.Add(filterMarker);
                 }
+            }
+
+            if (mirror)
+            {
+                for (int i = 0; i < filterMatrix.Count; i++)
+                {
+                    var temp2 = new Tuple<Point, int>(new Point(Math.Abs((int)route.XLength + startX - filterMatrix[i].Item1.X), filterMatrix[i].Item1.Y), filterMatrix[i].Item2);
+
+                    filterMatrix[i] = temp2;
+                }
+                route = new Route(new Point(endPoint.Y, startPoint.X), new Point(startPoint.X, endPoint.Y));
             }
 
             route.HelpPoints = FilterPath(filterMatrix);
@@ -120,20 +185,19 @@ namespace PathFinder
             return result;
         }
 
-        private int GetNextY(Route route,ref int nextX, double lineAngle)
+        private int GetNextY(Route route, ref int nextX, double lineAngle)
         {
             var angle = GetAngle(nextX, route.XLength);
 
 
-            var nextY = (route.YLength/route.XLength)*nextX +
-                        ((route.StartPoint.Y*route.EndPoint.X - route.EndPoint.Y*route.StartPoint.X)/route.XLength);
-
+            var nextY = (route.YLength / route.XLength) * nextX +
+                        ((route.StartPoint.Y * route.EndPoint.X - route.EndPoint.Y * route.StartPoint.X) / route.XLength);
 
             var amplituda = AmplitudeFluctuations * Math.Sin(angle);
 
             nextY += amplituda * Math.Sign(Math.PI / 2 - lineAngle);
-            nextX -= Convert.ToInt32(Math.Round(amplituda * Math.Cos(Math.PI/2 - lineAngle)));
-            
+            nextX -= Convert.ToInt32(Math.Round(amplituda * Math.Cos(Math.PI / 2 - lineAngle)));
+
 
             return Convert.ToInt32(Math.Round(nextY));
         }

@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HelpPointsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelpPointsDialog.Designer.cs">
+      <DependentUpon>HelpPointsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="PathGenerator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -52,6 +58,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="HelpPointsDialog.resx">
+      <DependentUpon>HelpPointsDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PathGenerator.resx">
       <DependentUpon>PathGenerator.cs</DependentUpon>
     </EmbeddedResource>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -19,8 +20,8 @@ namespace PathFinder.View
                 ProbabilityCmb.Items.Add(i);
             }
             _pathGenerator = new PathFinder.PathGenerator();
-            AmplitudeFluctuationsTb.Text = "10";
-            OscillationFrequencyTb.Text = "1";
+            MaxAmplitudeFluctuationsTb.Text = "10";
+            MaxOscillationFrequencyTb.Text = "1";
             MinIntervalWidthTb.Text = "5";
             ProbabilityCmb.SelectedItem = 50;
             StartX.Text = "10";
@@ -30,11 +31,29 @@ namespace PathFinder.View
             _graphics = RouteView.CreateGraphics();
         }
 
-
+        public static List<Point> HelPoints = new List<Point>();
 
         private void CleanBtn_Click(object sender, EventArgs e)
         {
             RouteView.CreateGraphics().Clear(Color.White);
+        }
+
+        private Route GetRoute(Map map, int probability)
+        {
+            Route route;
+            if (HelPoints.Count > 0)
+            {
+                var points = new List<Point>();
+                points.Add(_startPoint);
+                points.AddRange(HelPoints);
+                points.Add(_endPoint);
+                route = _pathGenerator.GetPath(map, points, probability);
+            }
+            else
+            {
+                route = _pathGenerator.GetPath(map, _startPoint, _endPoint, probability);
+            }
+            return route;
         }
 
         private void ApplyBtn_Click(object sender, EventArgs e)
@@ -44,10 +63,10 @@ namespace PathFinder.View
                 if (!ValidateInput()) { return; }
 
                 var map = new Map(RouteView.Width, RouteView.Height);
-                var probability = Convert.ToInt32(ProbabilityCmb.SelectedItem);
-                var route = _pathGenerator.GetPath(map, _startPoint, _endPoint, probability);
+                var probability = Convert.ToInt32(ProbabilityCmb.Text);
+                var route = GetRoute(map, probability);
                 var resultPoints = route.GetFullPath();
-
+                
                 DrawStartPoints(_startPoint, _endPoint);
                 _graphics.Clear(Color.White);
                 if (BezierCurveCb.Checked)
@@ -72,11 +91,11 @@ namespace PathFinder.View
                     //points[count] = _endPoint;
 
                     //_graphics.DrawCurve(new Pen(Color.Firebrick, PaneWidth), points);
-                    
+
                     DrawCurve(_startPoint, _endPoint);
-                    
+
                     //DrawCurve(resultPoints[count - 1], _endPoint);    
-                    
+
                 }
             }
             catch (Exception ex)
@@ -85,19 +104,48 @@ namespace PathFinder.View
             }
         }
 
+        private static int GetRandomValueInRange(string minVal, string maxVal)
+        {
+            var min = Convert.ToInt32(minVal);
+            var max = Convert.ToInt32(maxVal);
+            var rand = new Random();
+            return rand.Next(min, max);
+        }
+
+        private int GetAmplitudeAmplitudeFluctuations()
+        {
+            if (String.IsNullOrEmpty(MinAmplitudeFluctuationsTb.Text) &&
+               String.IsNullOrEmpty(MaxAmplitudeFluctuationsTb.Text))
+            {
+                throw new ArgumentException("Incorect Amplitude");
+            }
+            return GetRandomValueInRange(MinAmplitudeFluctuationsTb.Text, MaxAmplitudeFluctuationsTb.Text);
+        }
+
+        private int GetOscillationFrequency()
+        {
+            if (String.IsNullOrEmpty(MinOscillationFrequencyTb.Text) &&
+                           String.IsNullOrEmpty(MaxOscillationFrequencyTb.Text))
+            {
+                throw new ArgumentException("Incorect Frequency");
+            }
+            return GetRandomValueInRange(MinOscillationFrequencyTb.Text, MaxOscillationFrequencyTb.Text);
+        }
+
+
         private bool ValidateInput()
         {
             bool res = true;
             try
             {
-                if (!String.IsNullOrEmpty(AmplitudeFluctuationsTb.Text))
+                if (!String.IsNullOrEmpty(MinAmplitudeFluctuationsTb.Text))
                 {
-                    _pathGenerator.AmplitudeFluctuations = Convert.ToInt32(AmplitudeFluctuationsTb.Text);
+                    _pathGenerator.AmplitudeFluctuations = GetAmplitudeAmplitudeFluctuations();
                 }
 
-                if (!String.IsNullOrEmpty(OscillationFrequencyTb.Text))
+                if (!String.IsNullOrEmpty(MinOscillationFrequencyTb.Text))
                 {
-                    _pathGenerator.OscillationFrequency = Convert.ToInt32(OscillationFrequencyTb.Text);
+                    _pathGenerator.OscillationFrequency = GetOscillationFrequency();
                 }
 
                 if (!String.IsNullOrEmpty(MinIntervalWidthTb.Text))
@@ -148,15 +196,21 @@ namespace PathFinder.View
 
         private void DrawCurve(Point start, Point end)
         {
+            DrawCurve(start, end, Color.Blue);
+        }
+
+        private void DrawCurve(Point start, Point end, Color color)
+        {
             try
             {
-                var pen = new Pen(Color.Blue, PaneWidth);
+                var pen = new Pen(color, PaneWidth);
                 _graphics.DrawLine(pen, start, end);
             }
             catch (Exception)
             {
                 MessageBox.Show("Incorect params for Curve ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
         private void DrawBezierCurve(IEnumerable<Point> points)
@@ -172,9 +226,36 @@ namespace PathFinder.View
             }
         }
 
+        private void DrawSimpleCurve(object sender, EventArgs e)
+        {
+            try
+            {
+                if (String.IsNullOrEmpty(SCEndX.Text) || String.IsNullOrEmpty(SCEndY.Text) ||
+                    String.IsNullOrEmpty(SCStartX.Text) || String.IsNullOrEmpty(SCStartY.Text))
+                {
+                    throw new ArgumentException();
+                }
+                var start = new Point(Convert.ToInt32(SCStartX.Text), Convert.ToInt32(SCStartY.Text));
+                var end = new Point(Convert.ToInt32(SCEndX.Text), Convert.ToInt32(SCEndY.Text));
+
+                DrawCurve(start, end, Color.ForestGreen);
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("Incorect values for simple curve");
+            }
+        }
+
         private Point _startPoint;
         private Point _endPoint;
         private Graphics _graphics;
         private readonly PathFinder.PathGenerator _pathGenerator;
+
+        private void AddHelpPoitnsBtn_Click(object sender, EventArgs e)
+        {
+            var helpPoints = new HelpPointsDialog();
+            helpPoints.ShowDialog();
+        }
     }
 }

@@ -95,8 +95,14 @@ namespace PathFinder
             var count = helpPoints.Count + 2;
             var points = new Point[count];
             helpPoints.CopyTo(points, 1);
-            points[0] = StartPoint;
-            points[count - 1] = EndPoint;
+            points[0] = _start;
+            points[count - 1] = _end;
+
+            if (Invers)
+            {
+                Array.Reverse(points);
+            }
+
             return points;
         }
 
