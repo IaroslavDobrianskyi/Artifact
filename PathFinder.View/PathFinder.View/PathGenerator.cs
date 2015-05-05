@@ -257,5 +257,11 @@ namespace PathFinder.View
             var helpPoints = new HelpPointsDialog();
             helpPoints.ShowDialog();
         }
+
+        private void PathGenerator_Resize(object sender, EventArgs e)
+        {
+            _graphics.Clear(Color.White);
+            _graphics = RouteView.CreateGraphics();
+        }
     }
 }

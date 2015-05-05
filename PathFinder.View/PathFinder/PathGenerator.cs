@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.Remoting;
+using System.Runtime.Remoting.Messaging;
 using System.Text.RegularExpressions;
 
 namespace PathFinder
@@ -53,12 +54,14 @@ namespace PathFinder
         public Route GetPath(Map map, List<Point> points, int probability = ProbabilityDef)
         {
             var listRotes = new List<Route>();
+
             for (int index = 0; index + 1 < points.Count; index++)
             {
                 var startPoint = points[index];
                 var endPoint = points[index + 1];
                 listRotes.Add(GetPath(map, startPoint, endPoint, probability));
             }
+
             var resultRoute = new Route(points.First(), points.Last());
             var helpPointsForResultRoute = new List<Point>();
 
@@ -69,7 +72,7 @@ namespace PathFinder
             {
                 var currRoute = en.Current;
 
-                helpPointsForResultRoute.AddRange(currRoute.Invers ? currRoute.HelpPoints.Reverse() : currRoute.HelpPoints);
+                helpPointsForResultRoute.AddRange(currRoute.HelpPoints);
                 if (canMove = en.MoveNext())
                 {
                     helpPointsForResultRoute.Add(currRoute.EndPoint);
@@ -82,15 +85,15 @@ namespace PathFinder
 
         public Route GetPath(Map map, Point startPoint, Point endPoint, int probability = ProbabilityDef)
         {
-            bool mirror = false;
+           // bool mirror = false;
 
-            if (startPoint.Y > endPoint.Y)
-            {
-                mirror = true;
-                var temp = startPoint.Y;
-                startPoint.Y = endPoint.Y;
-                endPoint.Y = temp;
-            }
+            //if (startPoint.Y > endPoint.Y)
+            //{
+            //    mirror = true;
+            //    var temp = startPoint.Y;
+            //    startPoint.Y = endPoint.Y;
+            //    endPoint.Y = temp;
+            //}
 
             var route = new Route(startPoint, endPoint);
 
@@ -105,14 +108,15 @@ namespace PathFinder
             int startX, endX;
             if (startPoint.X > endPoint.X)
             {
-                endX = startPoint.X + 1;
-                startX = endPoint.X;
+                endX = startPoint.X;
+                startX = endPoint.X + 1;
             }
             else
             {
                 endX = endPoint.X;
                 startX = startPoint.X + 1;
             }
+
 
             for (int i = startX; i < endX; i++)
             {
@@ -124,16 +128,16 @@ namespace PathFinder
                 }
             }
 
-            if (mirror)
-            {
-                for (int i = 0; i < filterMatrix.Count; i++)
-                {
-                    var temp2 = new Tuple<Point, int>(new Point(Math.Abs((int)route.XLength + startX - filterMatrix[i].Item1.X), filterMatrix[i].Item1.Y), filterMatrix[i].Item2);
+            //if (mirror)
+            //{
+            //    for (int i = 0; i < filterMatrix.Count; i++)
+            //    {
+            //        var temp2 = new Tuple<Point, int>(new Point(Math.Abs((int)route.XLength + startX - filterMatrix[i].Item1.X), filterMatrix[i].Item1.Y), filterMatrix[i].Item2);
 
-                    filterMatrix[i] = temp2;
-                }
-                route = new Route(new Point(endPoint.Y, startPoint.X), new Point(startPoint.X, endPoint.Y));
-            }
+            //        filterMatrix[i] = temp2;
+            //    }
+            //    route = new Route(new Point(endPoint.Y, startPoint.X), new Point(startPoint.X, endPoint.Y));
+            //}
 
             route.HelpPoints = FilterPath(filterMatrix);
 
@@ -142,6 +146,7 @@ namespace PathFinder
 
         private bool ValidatePoint(Map map, Point point)
         {
+
             return point.X <= map.Width && point.Y <= map.Height;
         }
 
@@ -189,7 +194,11 @@ namespace PathFinder
         {
             var angle = GetAngle(nextX, route.XLength);
 
-
+            //int helpVal = 1;
+            //if (route.EndPoint.Y < route.StartPoint.Y)
+            //{
+            //    helpVal = -1;
+            //}
             var nextY = (route.YLength / route.XLength) * nextX +
                         ((route.StartPoint.Y * route.EndPoint.X - route.EndPoint.Y * route.StartPoint.X) / route.XLength);
 

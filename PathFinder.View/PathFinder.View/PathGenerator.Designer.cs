@@ -416,6 +416,7 @@
             // 
             // AddHelpPoitnsBtn
             // 
+            this.AddHelpPoitnsBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AddHelpPoitnsBtn.Location = new System.Drawing.Point(611, 472);
             this.AddHelpPoitnsBtn.Name = "AddHelpPoitnsBtn";
             this.AddHelpPoitnsBtn.Size = new System.Drawing.Size(101, 28);
@@ -439,6 +440,7 @@
             this.Controls.Add(this.ApplyBtn);
             this.Name = "PathGenerator";
             this.Text = "PathGenerator";
+            this.Resize += new System.EventHandler(this.PathGenerator_Resize);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
