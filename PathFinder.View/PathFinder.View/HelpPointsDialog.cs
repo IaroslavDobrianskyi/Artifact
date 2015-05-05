@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -27,8 +25,8 @@ namespace PathFinder.View
                 PathGenerator.HelPoints.Clear();
                 foreach (DataGridViewRow record in HelpPointsGrid.Rows)
                 {
-                    if (record.Cells["X"].Value == null || String.IsNullOrEmpty(record.Cells["X"].Value.ToString()) || 
-                        record.Cells["Y"].Value == null || String.IsNullOrEmpty(record.Cells["Y"].Value.ToString()))
+                    if (String.IsNullOrEmpty((string) record.Cells["X"].Value) ||
+                        String.IsNullOrEmpty((string) record.Cells["Y"].Value))
                     {
                         continue;
                     }
