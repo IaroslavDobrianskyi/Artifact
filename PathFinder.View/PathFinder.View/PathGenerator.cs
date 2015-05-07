@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -33,27 +32,29 @@ namespace PathFinder.View
 
         public static List<Point> HelPoints = new List<Point>();
 
+        private static int GetRandomValueInRange(string minVal, string maxVal)
+        {
+            var min = Convert.ToInt32(minVal);
+            var max = Convert.ToInt32(maxVal);
+            var rand = new Random();
+            return rand.Next(min, max);
+        }
+
         private void CleanBtn_Click(object sender, EventArgs e)
         {
             RouteView.CreateGraphics().Clear(Color.White);
         }
 
-        private Route GetRoute(Map map, int probability)
+        private void AddHelpPoitnsBtn_Click(object sender, EventArgs e)
         {
-            Route route;
-            if (HelPoints.Count > 0)
-            {
-                var points = new List<Point>();
-                points.Add(_startPoint);
-                points.AddRange(HelPoints);
-                points.Add(_endPoint);
-                route = _pathGenerator.GetPath(map, points, probability);
-            }
-            else
-            {
-                route = _pathGenerator.GetPath(map, _startPoint, _endPoint, probability);
-            }
-            return route;
+            var helpPoints = new HelpPointsDialog();
+            helpPoints.ShowDialog();
+        }
+
+        private void PathGenerator_Resize(object sender, EventArgs e)
+        {
+            _graphics.Clear(Color.White);
+            _graphics = RouteView.CreateGraphics();
         }
 
         private void ApplyBtn_Click(object sender, EventArgs e)
@@ -66,7 +67,7 @@ namespace PathFinder.View
                 var probability = Convert.ToInt32(ProbabilityCmb.Text);
                 var route = GetRoute(map, probability);
                 var resultPoints = route.GetFullPath();
-                
+
                 DrawStartPoints(_startPoint, _endPoint);
                 _graphics.Clear(Color.White);
                 if (BezierCurveCb.Checked)
@@ -104,14 +105,24 @@ namespace PathFinder.View
             }
         }
 
-        private static int GetRandomValueInRange(string minVal, string maxVal)
+        private Route GetRoute(Map map, int probability)
         {
-            var min = Convert.ToInt32(minVal);
-            var max = Convert.ToInt32(maxVal);
-            var rand = new Random();
-            return rand.Next(min, max);
+            Route route;
+            if (HelPoints.Count > 0)
+            {
+                var points = new List<Point>();
+                points.Add(_startPoint);
+                points.AddRange(HelPoints);
+                points.Add(_endPoint);
+                route = _pathGenerator.GetPath(map, points, probability);
+            }
+            else
+            {
+                route = _pathGenerator.GetPath(map, _startPoint, _endPoint, probability);
+            }
+            return route;
         }
-
+        
         private int GetAmplitudeAmplitudeFluctuations()
         {
             if (String.IsNullOrEmpty(MinAmplitudeFluctuationsTb.Text) &&
@@ -131,7 +142,6 @@ namespace PathFinder.View
             }
             return GetRandomValueInRange(MinOscillationFrequencyTb.Text, MaxOscillationFrequencyTb.Text);
         }
-
 
         private bool ValidateInput()
         {
@@ -180,7 +190,6 @@ namespace PathFinder.View
             _graphics.FillEllipse(Brushes.Red, end.X, end.Y, 3, 2);
         }
 
-
         private void DrawSimpleCurve(IEnumerable<Point> points)
         {
             try
@@ -210,7 +219,6 @@ namespace PathFinder.View
             {
                 MessageBox.Show("Incorect params for Curve ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void DrawBezierCurve(IEnumerable<Point> points)
@@ -242,7 +250,6 @@ namespace PathFinder.View
             }
             catch (Exception)
             {
-
                 MessageBox.Show("Incorect values for simple curve");
             }
         }
@@ -251,11 +258,5 @@ namespace PathFinder.View
         private Point _endPoint;
         private Graphics _graphics;
         private readonly PathFinder.PathGenerator _pathGenerator;
-
-        private void AddHelpPoitnsBtn_Click(object sender, EventArgs e)
-        {
-            var helpPoints = new HelpPointsDialog();
-            helpPoints.ShowDialog();
-        }
     }
 }

@@ -409,6 +409,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RouteView.BackColor = System.Drawing.Color.White;
+            this.RouteView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.RouteView.Location = new System.Drawing.Point(12, 12);
             this.RouteView.Name = "RouteView";
             this.RouteView.Size = new System.Drawing.Size(990, 345);
@@ -416,6 +417,7 @@
             // 
             // AddHelpPoitnsBtn
             // 
+            this.AddHelpPoitnsBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AddHelpPoitnsBtn.Location = new System.Drawing.Point(611, 472);
             this.AddHelpPoitnsBtn.Name = "AddHelpPoitnsBtn";
             this.AddHelpPoitnsBtn.Size = new System.Drawing.Size(101, 28);
@@ -439,6 +441,7 @@
             this.Controls.Add(this.ApplyBtn);
             this.Name = "PathGenerator";
             this.Text = "PathGenerator";
+            this.Resize += new System.EventHandler(this.PathGenerator_Resize);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

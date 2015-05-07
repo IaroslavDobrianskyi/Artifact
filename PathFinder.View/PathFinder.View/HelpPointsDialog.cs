@@ -25,8 +25,8 @@ namespace PathFinder.View
                 PathGenerator.HelPoints.Clear();
                 foreach (DataGridViewRow record in HelpPointsGrid.Rows)
                 {
-                    if (String.IsNullOrEmpty((string) record.Cells["X"].Value) ||
-                        String.IsNullOrEmpty((string) record.Cells["Y"].Value))
+                    if ((record.Cells["X"].Value == null || String.IsNullOrEmpty(record.Cells["X"].Value.ToString())) ||
+                       (record.Cells["Y"].Value == null || String.IsNullOrEmpty(record.Cells["Y"].Value.ToString())))
                     {
                         continue;
                     }

@@ -14,8 +14,8 @@ namespace PathFinder
             _start = start;
             _end = end;
 
-            var xLength = _end.X - _start.X;
-            var yLength = _end.Y - _start.Y;
+            var xLength = Math.Abs(_end.X - _start.X);
+            var yLength = Math.Abs(_end.Y - _start.Y);
 
             if (xLength < yLength)
             {
@@ -30,7 +30,7 @@ namespace PathFinder
         {
             get
             {
-                return Invers ? _end : _start;
+                return Invers ? new Point(_start.Y, _start.X) : new Point(_start.X, _start.Y);
             }
         }
 
@@ -38,7 +38,7 @@ namespace PathFinder
         {
             get
             {
-                return Invers ? _start : _end;
+                return Invers ? new Point(_end.Y, _end.X) : new Point(_end.X, _end.Y);
             }
         }
 
@@ -46,7 +46,7 @@ namespace PathFinder
         {
             get
             {
-                return _xLength;
+                return Invers ? _yLength : _xLength;
             }
         }
 
@@ -54,7 +54,7 @@ namespace PathFinder
         {
             get
             {
-                return _yLength;
+                return Invers ? _xLength : _yLength;
             }
         }
 
@@ -97,11 +97,6 @@ namespace PathFinder
             helpPoints.CopyTo(points, 1);
             points[0] = _start;
             points[count - 1] = _end;
-
-            if (Invers)
-            {
-                Array.Reverse(points);
-            }
 
             return points;
         }
